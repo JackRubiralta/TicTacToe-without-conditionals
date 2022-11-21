@@ -2,13 +2,12 @@
 #include <iostream>
 #include <string>
 
-
 using bitboard = uint32_t; 
 class TicTacToe {
     public:
         bitboard pos;
         bitboard mask;
-        unsigned int moveCounter = 0;
+        unsigned int move_counter = 0;
 
 
         TicTacToe() {
@@ -17,13 +16,13 @@ class TicTacToe {
         };
 
         unsigned int currentPlayer() const {
-            return moveCounter & 1; // using & to check if moveCounter is odd or even 
+            return move_counter & 1; // using & to check if move_counter is odd or even 
         }
         
         void makeMove(bitboard move) {
             pos ^= mask; // pos becomes other player board by switching the bits
             mask |= move; // add move to mask 
-            moveCounter++;
+            move_counter++;
         };
 
         unsigned int isWin() const {
@@ -57,32 +56,67 @@ class TicTacToe {
         }
 
 
-
-
         void print() const {
-            std::string arrayboard[9] = {" - ", " - ", " - ", " - ", " - ", " - ", " - ", " - ", " - "};
+            std::string array_board[9];
            
 
             bitboard player_positions[2] = {pos, pos ^ mask};  // instead of using (currentPlayer() == 1 ? pos : pos ^ mask)
-            std::string markers[3] = {" - ", " X ", " O "};
+            std::string markers[3] = {" \u001b[34mX\u001b[0m ", " \u001b[35mO\u001b[0m "};
             
-            for (int i = 0; i < 9; i++) {
-                // this one was hard to think of
-                arrayboard[i] = markers[((((bitboard)1 << i) & mask) != 0) + ((((bitboard)1 << i) & player_positions[currentPlayer() ^ 1]) != 0)]; 
-                //arrayboard[i] = markers[(((bitboard)1 << i) & player_positions[currentPlayer()]) != 0];
-                //arrayboard[i] = markers[(((((bitboard)1 << i) & player_positions[currentPlayer() ^ 1] != 0)))];
-
-                 
+            try {
+                array_board[0] = markers[(((((bitboard)1 << 0) & mask) != 0) + ((((bitboard)1 << 0) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[0] = " 1 ";
+            }
+            try {
+                array_board[1] = markers[(((((bitboard)1 << 1) & mask) != 0) + ((((bitboard)1 << 1) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[1] = " 2 ";
+            }
+            try {
+                array_board[2] = markers[(((((bitboard)1 << 2) & mask) != 0) + ((((bitboard)1 << 2) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[2] = " 3 ";
+            }
+            try {
+                array_board[3] = markers[(((((bitboard)1 << 3) & mask) != 0) + ((((bitboard)1 << 3) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[3] = " 4 ";
+            }
+            try {
+                array_board[4] = markers[(((((bitboard)1 << 4) & mask) != 0) + ((((bitboard)1 << 4) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[4] = " 5 ";
+            }
+            try {
+                array_board[5] = markers[(((((bitboard)1 << 5) & mask) != 0) + ((((bitboard)1 << 5) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[5] = " 6 ";
+            }
+            try {
+                array_board[6] = markers[(((((bitboard)1 << 6) & mask) != 0) + ((((bitboard)1 << 6) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[6] = " 7 ";
+            }
+            try {
+                array_board[7] = markers[(((((bitboard)1 << 7) & mask) != 0) + ((((bitboard)1 << 7) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[7] = " 8 ";
+            }
+            try {
+                array_board[8] = markers[(((((bitboard)1 << 8) & mask) != 0) + ((((bitboard)1 << 8) & player_positions[currentPlayer() ^ 1]) != 0)) - 1]; 
+            } catch (const std::exception) {
+                array_board[8] = " 9 ";
             }
 
-            std::cout << "-----------------" << std::endl;
-            std::cout << "| 2 |" << arrayboard[6] << "|" << arrayboard[7] << "|" << arrayboard[8] << "|" << std::endl;
-            std::cout << "-----------------" << std::endl;
-            std::cout << "| 1 |" << arrayboard[3] << "|" << arrayboard[4] << "|" << arrayboard[5] << "|" << std::endl;
-            std::cout << "-----------------" << std::endl;
-            std::cout << "| 0 |" << arrayboard[0] << "|" << arrayboard[1] << "|" << arrayboard[2] << "|" << std::endl;
-            std::cout << "-----------------" << std::endl;
-            std::cout << "|   | 0 | 1 | 2 |" << std::endl;
-            std::cout << "-----------------" << std::endl;
+            
+            
+            std::cout << "-------------" << std::endl;
+            std::cout << "|" << array_board[2] << "|" << array_board[5] << "|" << array_board[8] << "|" << std::endl;
+            std::cout << "-------------" << std::endl;
+            std::cout << "|" << array_board[1] << "|" << array_board[4] << "|" << array_board[7] << "|" << std::endl;
+            std::cout << "-------------" << std::endl;
+            std::cout << "|" << array_board[0] << "|" << array_board[3] << "|" << array_board[6] << "|" << std::endl;
+            std::cout << "-------------" << std::endl;
         }
 };
